@@ -4,7 +4,7 @@ using Microsoft.Extensions.Logging;
 
 namespace LoggerExtensions;
 
-public static class CertServiceLoggerFactory
+public static class FileLoggerFactory
 {
 	public static IServiceCollection AddLoggers(this IServiceCollection services, IConfiguration configuration)
 	{
