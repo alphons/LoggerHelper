@@ -10,7 +10,8 @@ public static class FileLoggerFactory
 	{
 		services.AddLogging(logging =>
 		{
-			if (configuration.GetValue<bool>("ConsoleLogging"))
+			logging.ClearProviders();
+			if (configuration.GetSection("CustomLogging").GetValue<bool>("ConsoleLogging"))
 			{
 				logging.AddSimpleConsole(c =>
 				{
@@ -18,7 +19,7 @@ public static class FileLoggerFactory
 					c.TimestampFormat = "HH:mm:ss ";
 				});
 			}
-			if (configuration.GetValue<bool>("FileLogging"))
+			if (configuration.GetSection("CustomLogging").GetValue<bool>("FileLogging"))
 			{
 				logging.AddFileLogger("Logs");
 			}
