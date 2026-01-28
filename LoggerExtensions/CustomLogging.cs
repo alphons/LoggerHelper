@@ -4,13 +4,15 @@ using Microsoft.Extensions.Logging;
 
 namespace LoggerExtensions;
 
-public static class FileLoggerFactory
+public static class CustomLogging
 {
-	public static IServiceCollection AddLoggers(this IServiceCollection services, IConfiguration configuration)
+	public static IServiceCollection AddCustomLogging(this IServiceCollection services, IConfiguration configuration)
 	{
 		services.AddLogging(logging =>
 		{
 			logging.ClearProviders();
+			logging.AddFilter("Microsoft.AspNetCore.Watch", LogLevel.None);
+			logging.AddFilter("Microsoft.AspNetCore.Watch.BrowserRefresh", LogLevel.None);
 			if (configuration.GetSection("CustomLogging").GetValue<bool>("ConsoleLogging"))
 			{
 				logging.AddSimpleConsole(c =>
@@ -45,7 +47,7 @@ public static class FileLoggerFactory
 	{
 		var services = new ServiceCollection();
 
-		services.AddLoggers(configuration);
+		services.AddCustomLogging(configuration);
 
 		var sp = services.BuildServiceProvider();
 
